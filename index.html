@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guy Presil | BI Developer & Analyst</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;800&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --vellum-bg: rgba(255, 255, 255, 0.45);
+            --vellum-border: rgba(255, 255, 255, 0.6);
+            --ink-primary: #1a1a1c;
+            --ink-secondary: #4a4a4e;
+            --accent: #3b82f6;
+            --glass-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.08);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #f4f5f7;
+            background-image: 
+                radial-gradient(at 0% 0%, hsla(210,100%,98%,1) 0, transparent 50%), 
+                radial-gradient(at 50% 0%, hsla(220,100%,97%,1) 0, transparent 50%), 
+                radial-gradient(at 100% 0%, hsla(210,100%,98%,1) 0, transparent 50%);
+            font-family: 'Inter', sans-serif;
+            color: var(--ink-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        /* Paper Grain Texture */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            opacity: 0.04;
+            pointer-events: none;
+            z-index: 9999;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3External%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        }
+
+        .vellum-container {
+            max-width: 1100px;
+            margin: 60px auto;
+            padding: 20px;
+            display: grid;
+            grid-template-columns: 1fr 2.5fr;
+            gap: 40px;
+            position: relative;
+        }
+
+        /* Abstract Background Sheets */
+        .sheet-decoration {
+            position: fixed;
+            background: var(--vellum-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--vellum-border);
+            z-index: -1;
+            border-radius: 4px;
+            box-shadow: var(--glass-shadow);
+        }
+
+        .sheet-1 { width: 400px; height: 600px; top: 10%; left: -5%; transform: rotate(-5deg); opacity: 0.3; }
+        .sheet-2 { width: 500px; height: 700px; bottom: 5%; right: -10%; transform: rotate(3deg); opacity: 0.2; }
+
+        /* Typography & Layout */
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+        }
+
+        .vellum-card {
+            background: var(--vellum-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--vellum-border);
+            padding: 40px;
+            border-radius: 2px;
+            box-shadow: var(--glass-shadow);
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            animation: slideUp 0.8s ease-out forwards;
+        }
+
+        .vellum-card:hover {
+            transform: translateY(-5px) scale(1.01);
+            background: rgba(255, 255, 255, 0.55);
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            letter-spacing: -0.04em;
+            line-height: 0.9;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+        }
+
+        h2 {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            color: var(--accent);
+            margin-bottom: 24px;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+            padding-bottom: 8px;
+            display: inline-block;
+        }
+
+        .mono {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            color: var(--ink-secondary);
+        }
+
+        .contact-link {
+            display: block;
+            color: var(--ink-primary);
+            text-decoration: none;
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+            transition: color 0.3s;
+        }
+
+        .contact-link:hover { color: var(--accent); }
+
+        .profile-summary {
+            font-size: 1.1rem;
+            font-weight: 300;
+            color: var(--ink-secondary);
+            margin-bottom: 40px;
+            max-width: 800px;
+        }
+
+        /* Experience Timeline */
+        .timeline-item {
+            margin-bottom: 48px;
+            position: relative;
+        }
+
+        .timeline-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 12px;
+        }
+
+        .job-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+        }
+
+        .company {
+            font-family: 'JetBrains Mono', monospace;
+            color: var(--accent);
+            font-size: 0.9rem;
+            margin-bottom: 16px;
+            display: block;
+        }
+
+        .job-bullets {
+            list-style: none;
+        }
+
+        .job-bullets li {
+            position: relative;
+            padding-left: 20px;
+            margin-bottom: 10px;
+            font-size: 0.95rem;
+            color: var(--ink-secondary);
+        }
+
+        .job-bullets li::before {
+            content: "→";
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+        }
+
+        /* Skills Grid */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            gap: 12px;
+        }
+
+        .skill-tag {
+            padding: 8px 12px;
+            background: rgba(255,255,255,0.4);
+            border: 1px solid rgba(0,0,0,0.05);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            text-align: center;
+            border-radius: 4px;
+            transition: all 0.3s;
+        }
+
+        .skill-tag:hover {
+            background: var(--accent);
+            color: white;
+            border-color: var(--accent);
+        }
+
+        /* Education & Projects */
+        .edu-item {
+            margin-bottom: 24px;
+        }
+
+        .edu-item h4 {
+            font-size: 1.1rem;
+            font-weight: 700;
+        }
+
+        .floating-nav {
+            position: sticky;
+            top: 40px;
+            height: fit-content;
+        }
+
+        @media (max-width: 900px) {
+            .vellum-container {
+                grid-template-columns: 1fr;
+            }
+            .floating-nav {
+                position: relative;
+                top: 0;
+            }
+            h1 { font-size: 2.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="sheet-decoration sheet-1"></div>
+    <div class="sheet-decoration sheet-2"></div>
+
+    <div class="vellum-container">
+        <!-- Sidebar Assembly -->
+        <aside class="sidebar">
+            <div class="vellum-card floating-nav">
+                <h2 style="margin-bottom: 10px;">IDENTITY</h2>
+                <h1>GUY<br>PRESIL</h1>
+                <p class="mono" style="margin-bottom: 24px;font-weight: 600;font-size: large;">BI DEVELOPER & ANALYST</p>
+                
+                <div class="contact-box">
+                    <a href="mailto:guy.presil@gmail.com" class="contact-link mono">guy.presil@gmail.com</a>
+                    <p class="contact-link mono">Givatayim, IL</p>
+                    <a href="#" class="contact-link mono" style="color: var(--accent);">LinkedIn ↗</a>
+                </div>
+
+                <div style="margin-top: 40px;">
+                    <h2>LANGUAGES</h2>
+                    <p class="mono">Hebrew: Native</p>
+                    <p class="mono">English: Fluent</p>
+                </div>
+            </div>
+
+            <div class="vellum-card">
+                <h2>CORE STACK</h2>
+                <div class="skills-grid">
+                    <div class="skill-tag">Power BI</div>
+                    <div class="skill-tag">Tableau</div>
+                    <div class="skill-tag">SQL (RDBs)</div>
+                    <div class="skill-tag">Python</div>
+                    <div class="skill-tag">Power Query</div>
+                    <div class="skill-tag">ETL</div>
+                    <div class="skill-tag">Azure</div>
+                    <div class="skill-tag">Active Directory</div>
+                    <div class="skill-tag">SAP / Namer</div>
+                    <div class="skill-tag">JavaScript</div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Assembly -->
+        <main class="content-area">
+            <section class="vellum-card" style="margin-bottom: 40px;">
+                <h2>PROFILE</h2>
+                <p class="profile-summary">
+                    Highly motivated BI Developer and Analyst with a B.A. in Technology Management. 
+                    Proven background in building and automating <strong>Data Pipelines</strong>, 
+                    conducting complex analysis on large datasets, and advanced visualization. 
+                    Dedicated to applying analytical and technical skills in dynamic technological environments.
+                </p>
+            </section>
+
+            <section class="vellum-card" style="margin-bottom: 40px;">
+                <h2>PROFESSIONAL EXPERIENCE</h2>
+
+                <div class="timeline-item">
+                    <div class="timeline-header">
+                        <span class="job-title">IT Representative</span>
+                        <span class="mono">2025 — PRESENT</span>
+                    </div>
+                    <span class="company">Ichilov Hospital</span>
+                    <ul class="job-bullets">
+                        <li>Technical support for internal employees across Windows, Office, and Enterprise software.</li>
+                        <li>User Management via Eproc and Active Directory for permissions and access control.</li>
+                        <li>Hardware, software, and network troubleshooting to ensure zero downtime.</li>
+                        <li>Security & Compliance: Patch management and system integrity across endpoints.</li>
+                    </ul>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-header">
+                        <span class="job-title">Data Analyst (BI Focus)</span>
+                        <span class="mono">2022 — 2023</span>
+                    </div>
+                    <span class="company">BI TEAM</span>
+                    <ul class="job-bullets">
+                        <li>Executed data analytics for major real estate projects using SQL for complex querying.</li>
+                        <li>Designed robust data models to aggregate disparate datasets into unified insights.</li>
+                        <li>Created automated reporting systems for customer behavior analysis via Power BI.</li>
+                        <li>Collaborated with business teams to translate requirements into technical reporting specifications.</li>
+                    </ul>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-header">
+                        <span class="job-title">Marketing Automation Specialist</span>
+                        <span class="mono">2020 — 2021</span>
+                    </div>
+                    <span class="company">ISCL</span>
+                    <ul class="job-bullets">
+                        <li>Deployed automation solutions to optimize lead processes and the Customer Journey.</li>
+                        <li>Analyzed automation success metrics and KPIs via detailed progress reports.</li>
+                        <li>Bridge the gap between Marketing and Sales teams through automated workflows.</li>
+                    </ul>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-header">
+                        <span class="job-title">Lead Project Manager</span>
+                        <span class="mono">2016 — 2019</span>
+                    </div>
+                    <span class="company">IDF (C4I CORPS)</span>
+                    <ul class="job-bullets">
+                        <li>Managed and trained technical teams, improving operational efficiency through new methodologies.</li>
+                        <li>Supervised installation and deployment of sensitive hardware and communication networks.</li>
+                        <li>Systemic responsibility for mission-critical software environments.</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section class="vellum-card">
+                <h2>ACADEMIC FOUNDATION</h2>
+                <div class="edu-item">
+                    <div class="timeline-header">
+                        <span class="job-title">B.A. Technology Management</span>
+                        <span class="mono">2019 — 2022</span>
+                    </div>
+                    <span class="company">Bar-Ilan University</span>
+                    <p style="margin-top: 10px; font-size: 0.95rem; color: var(--ink-secondary);">
+                        <strong>Final Project:</strong> 24/7 Patient Medical Status App. Developed full startup demo covering UI/UX via Axure and operational strategy.
+                    </p>
+                    <p class="mono" style="margin-top: 5px; font-size: 0.75rem;">Specialization: Python Coding, SQL Database Management</p>
+                </div>
+
+                <div class="edu-item">
+                    <div class="timeline-header">
+                        <span class="job-title">Network Technician Certification</span>
+                        <span class="mono">2019</span>
+                    </div>
+                    <span class="company">John Bryce</span>
+                </div>
+
+                <div class="edu-item" style="margin-bottom: 0;">
+                    <div class="timeline-header">
+                        <span class="job-title">High School Diploma (Computer Science)</span>
+                        <span class="mono">2012 — 2016</span>
+                    </div>
+                    <span class="company">ORT Technikum Givatayim</span>
+                    <p class="mono" style="font-size: 0.75rem;">Stack: C#, ASP.NET, HTML, SQL</p>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        // Subtle Reveal on Scroll
+        const observerOptions = {
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = "1";
+                    entry.target.style.transform = "translateY(0)";
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.vellum-card').forEach(card => {
+            card.style.opacity = "0";
+            card.style.transform = "translateY(20px)";
+            card.style.transition = "all 0.6s ease-out";
+            observer.observe(card);
+        });
+
+        // Mouse Parallax for "Vellum" effect
+        document.addEventListener('mousemove', (e) => {
+            const sheets = document.querySelectorAll('.sheet-decoration');
+            const x = (window.innerWidth - e.pageX) / 50;
+            const y = (window.innerHeight - e.pageY) / 50;
+            
+            sheets.forEach((sheet, index) => {
+                const factor = (index + 1) * 0.5;
+                sheet.style.transform = `translate(${x * factor}px, ${y * factor}px) rotate(${index === 0 ? -5 : 3}deg)`;
+            });
+        });
+    </script>
+</body>
+</html>
